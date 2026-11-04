@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Navigationstest iXS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#f5f6f4; --surface:#ffffff; --ink:#1c2127; --muted:#5d6670; --line:#dde1df; --soft:#eceeed;
+  --accent:#2d5b86; --accent-ink:#ffffff; --accent-soft:#e3ebf3; --part:#c08a1e;
+  --sans:"IBM Plex Sans","Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --r:8px; color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root{--bg:#15191d;--surface:#1d2227;--ink:#e7eaec;--muted:#9aa4ad;--line:#30373e;--soft:#262c32;
+    --accent:#7fa8d1;--accent-ink:#0f1720;--accent-soft:#233344;--part:#d9a945;color-scheme:dark}
+}
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2{text-wrap:balance;margin:0;font-weight:600;line-height:1.25}
+h1{font-size:1.6rem} h2{font-size:1.2rem}
+p{margin:0}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+[hidden]{display:none!important}
+.wrap{max-width:680px;margin:0 auto;padding-block:24px 120px;display:flex;flex-direction:column;gap:20px}
+.eyebrow{font-family:var(--mono);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;gap:14px}
+.lead{font-size:1.05rem;max-width:62ch}
+.muted{color:var(--muted)} .small{font-size:.875rem}
+.howto{display:grid;grid-template-columns:auto 1fr;gap:8px 12px;font-size:.95rem}
+.howto b{font-family:var(--mono);font-weight:500;color:var(--accent)}
+fieldset{border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+legend{font-weight:500;margin-bottom:6px;padding:0}
+.choices{display:flex;flex-wrap:wrap;gap:8px}
+.choices label{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer;background:var(--surface)}
+.choices input{accent-color:var(--accent);margin:0}
+.choices label:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.btn{display:inline-block;border:1px solid var(--line);background:var(--surface);padding:11px 18px;border-radius:var(--r);cursor:pointer;font-weight:500;text-align:center;text-decoration:none;color:var(--ink)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:transparent}
+.btn.big{font-size:1.05rem;padding:14px 22px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.notice{border-left:3px solid var(--part);background:var(--soft);padding:10px 14px;border-radius:4px;font-size:.92rem}
+textarea{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:8px 10px;width:100%;min-height:90px;resize:vertical}
+textarea.code{font-family:var(--mono);font-size:.75rem}
+details summary{cursor:pointer;color:var(--muted);font-size:.875rem}
+.progress{display:flex;flex-direction:column;gap:6px}
+.bar{height:4px;background:var(--soft);border-radius:2px;overflow:hidden}
+.bar span{display:block;height:100%;background:var(--accent);transition:width .3s}
+.task{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;box-shadow:0 4px 14px -10px rgba(0,0,0,.25)}
+.task p{font-size:1.05rem;font-weight:500}
+.tree{list-style:none;margin:0;padding:0}
+.tree ul{list-style:none;margin:0;padding:0 0 0 18px;border-left:1px solid var(--line);margin-left:11px}
+.node{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:transparent;padding:9px 8px;border-radius:6px;cursor:pointer;min-height:42px}
+.node:hover{background:var(--soft)}
+.node .chev{width:14px;flex:none;font-family:var(--mono);color:var(--muted);transition:transform .15s;display:inline-block}
+.node[aria-expanded="true"] .chev{transform:rotate(90deg)}
+.node.leaf .chev{visibility:hidden}
+.node[aria-expanded="true"]{font-weight:600}
+.node.sel{background:var(--accent-soft);font-weight:600;box-shadow:inset 0 0 0 1.5px var(--accent)}
+.grp{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:12px 8px 4px}
+.actions{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);z-index:6;
+  padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.actions .in{max-width:680px;margin:0 auto;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.actions .pick{font-size:.85rem;color:var(--muted);min-width:0;flex:1 1 200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.actions .pick strong{color:var(--ink)}
+.actions .btns{display:flex;gap:8px;flex-wrap:wrap}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="eyebrow">iXS · Navigationstest</span>
+  <main id="view"></main>
+</div>
+<div class="actions" id="actions" hidden></div>
+<script>
+/* ---------- Bäume ---------- */
+const T=(label,kids)=>({label,kids:kids||null});
+const leaves=a=>a.map(l=>T(l));
+const grp=(g,nodes)=>nodes.map(n=>(n.group=g,n));
+const motoBekl=()=>T("Bekleidung",leaves(["Jacken","Hosen","Kombis","Regenbekleidung","Base- & Midlayer","Handschuhe","Stiefel & Schuhe","Airbag","Motocross"]));
+const motoHelme=()=>T("Helme",leaves(["Integralhelme","Klapphelme","Jethelme"]));
+const mtbBekl=()=>T("Bekleidung",leaves(["Trikots","Hosen","Regenbekleidung","Handschuhe"]));
+const mtbHelme=()=>T("Helme & Brillen",leaves(["Fullface-Helme","Openface-Helme","Brillen"]));
+const mtbProt=()=>T("Protektoren",leaves(["Knieschoner","Ellbogenschoner","Oberkörperprotektoren"]));
+const motoLife=["Caps","Hoodies & Sweater","Shirts"];
+const mtbLife=["Caps & Mützen","Hoodies & Sweater","Shirts & Hemden","Socken"];
+const motoKat=()=>[motoBekl(),motoHelme(),T("Protektoren"),T("Zubehör & Ersatzteile",leaves(["Masken & Tücher","Nierengurte","Ersatzteile Helme","Ersatzteile Bekleidung","Ersatzteile Ausrüstung"])),T("Lifestyle",leaves(motoLife))];
+const mtbKat=()=>[mtbBekl(),mtbHelme(),mtbProt(),T("Zubehör & Ersatzteile",leaves(["Ersatzteile Brillen","Ersatzteile Helme","Ersatzteile Protektoren"])),T("Lifestyle",leaves(mtbLife))];
+const common=()=>[T("Sale",leaves(["Moto Sale","MTB Sale"])),T("Service",leaves(["Versand","Zahlungsarten","Retouren","Sendungsverfolgung","FAQ","Kontakt"])),T("Über iXS",leaves(["Über uns","Athleten","Blog","Händler finden"]))];
+const MOTO_W=["Venture","Tourster","Rapid","Race"], MTB_W=["Flow","Carve","Trigger","Park"];
+const TREES={
+  A:[T("Moto",motoKat()),T("MTB",mtbKat()),...common()],
+  B:[T("Moto-Welten",MOTO_W.map(w=>T(w,[motoBekl(),motoHelme(),T("Protektoren"),T("Zubehör",leaves(["Masken & Tücher","Nierengurte"]))]))),
+     T("MTB-Welten",MTB_W.map(w=>T(w,[mtbBekl(),mtbHelme(),mtbProt(),T("Zubehör")]))),
+     T("Lifestyle",[T("Moto",leaves(motoLife)),T("MTB",leaves(mtbLife))]),
+     T("Ersatzteile",[T("Moto",leaves(["Ersatzteile Helme","Ersatzteile Bekleidung","Ersatzteile Ausrüstung"])),T("MTB",leaves(["Ersatzteile Brillen","Ersatzteile Helme","Ersatzteile Protektoren"]))]),
+     ...common()],
+  C:[T("Moto",[...grp("Nach Kategorie",motoKat()),...grp("Nach Riding World",leaves(MOTO_W))]),
+     T("MTB",[...grp("Nach Kategorie",mtbKat()),...grp("Nach Riding World",leaves(MTB_W))]),
+     ...common()]
+};
+(function setPaths(){const walk=(nodes,parent,ix)=>nodes.forEach((n,i)=>{n.path=parent?parent+"|"+n.label:n.label;n.ix=ix?ix+"."+i:String(i);if(n.kids)walk(n.kids,n.path,n.ix)});Object.values(TREES).forEach(t=>walk(t,"",""));})();
+const TREE_NAMES={A:"A · Bereich zuerst",B:"B · Fahrstil zuerst",C:"C · Mischform"};
+
+/* ---------- Aufgaben und Bewertung ---------- */
+const TASKS=[
+ {id:1,typ:"mit Fahrstil",text:"Du planst eine Alpentour mit dem Motorrad und brauchst etwas für deine Hände, das bei Regen trocken bleibt.",
+  A:{s:["Moto|Bekleidung|Handschuhe"]},C:{s:["Moto|Bekleidung|Handschuhe"],p:["Moto|Tourster","Moto|Venture"]},
+  B:{s:["Moto-Welten|Tourster|Bekleidung|Handschuhe","Moto-Welten|Venture|Bekleidung|Handschuhe"],p:["Moto-Welten|*|Bekleidung|Handschuhe"]},world:["Tourster","Venture"]},
+ {id:2,typ:"mit Fahrstil",text:"Du fährst seit kurzem Enduro-Trails mit dem Mountainbike und suchst Schutz für die Knie.",
+  A:{s:["MTB|Protektoren|Knieschoner"]},C:{s:["MTB|Protektoren|Knieschoner"],p:["MTB|Carve"]},
+  B:{s:["MTB-Welten|Carve|Protektoren|Knieschoner"],p:["MTB-Welten|*|Protektoren|Knieschoner"]},world:["Carve"]},
+ {id:3,typ:"mit Fahrstil",text:"Du fährst Trackdays auf der Rennstrecke und suchst einen einteiligen Lederanzug.",
+  A:{s:["Moto|Bekleidung|Kombis"]},C:{s:["Moto|Bekleidung|Kombis"],p:["Moto|Race"]},
+  B:{s:["Moto-Welten|Race|Bekleidung|Kombis"],p:["Moto-Welten|Rapid|Bekleidung|Kombis"]},world:["Race"]},
+ {id:4,typ:"ohne Fahrstil",text:"Das Visier deines Motorradhelms ist zerkratzt und du brauchst ein neues.",
+  A:{s:["Moto|Zubehör & Ersatzteile|Ersatzteile Helme"]},C:{s:["Moto|Zubehör & Ersatzteile|Ersatzteile Helme"]},
+  B:{s:["Ersatzteile|Moto|Ersatzteile Helme"],p:["Moto-Welten|*|Zubehör"]}},
+ {id:5,typ:"ohne Fahrstil",text:"Du suchst einen separaten Rückenprotektor für deine Motorradjacke.",
+  A:{s:["Moto|Protektoren"]},C:{s:["Moto|Protektoren"]},B:{s:["Moto-Welten|*|Protektoren"]}},
+ {id:6,typ:"ohne Fahrstil",text:"Du suchst als Geschenk einen Pullover mit iXS-Logo für eine Kollegin, die Mountainbike fährt.",
+  A:{s:["MTB|Lifestyle|Hoodies & Sweater"]},C:{s:["MTB|Lifestyle|Hoodies & Sweater"]},B:{s:["Lifestyle|MTB|Hoodies & Sweater"]}},
+ {id:7,typ:"Stöbern",text:"Du willst neu mit dem Motorrad auf längere Reisen gehen und möchtest sehen, welche Ausrüstung iXS dafür anbietet.",
+  A:{s:["Moto$"]},C:{s:["Moto|Tourster","Moto|Venture"],p:["Moto$"]},B:{s:["Moto-Welten|Tourster","Moto-Welten|Venture"],p:["Moto-Welten$"]},world:["Tourster","Venture"]},
+ {id:8,typ:"Kontrolle",text:"Die bestellte Jacke passt nicht. Du willst sie zurückschicken.",
+  A:{s:["Service|Retouren"]},C:{s:["Service|Retouren"]},B:{s:["Service|Retouren"]}}
+];
+const match=(path,pat)=>{const exact=pat.endsWith("$");if(exact)pat=pat.slice(0,-1);const a=path.split("|"),b=pat.split("|");if(b.length>a.length||(exact&&b.length!==a.length))return false;return b.every((s,i)=>s==="*"||s===a[i]);};
+function score(tree,taskId,path,skipped){
+  if(skipped||!path)return"skip";
+  const r=TASKS.find(t=>t.id===taskId)[tree];
+  if(r.open)return"offen";
+  if((r.s||[]).some(p=>match(path,p)))return"erfolg";
+  if((r.p||[]).some(p=>match(path,p)))return"teil";
+  return"fehl";
+}
+const show=p=>p?p.split("|").join(" › "):"–";
+const WORLDS=[...MOTO_W,...MTB_W];
+const PRE=[
+ {k:"fahrt",q:"Fährst du selbst Motorrad, Mountainbike, beides oder keines davon?",o:["Motorrad","Mountainbike","Beides","Keines"]},
+ {k:"kauf",q:"Wie oft kaufst du Motorrad- oder Bikeausrüstung online?",o:["Nie","Etwa einmal pro Jahr","Mehrmals pro Jahr"]},
+ {k:"ixs",q:"Arbeitest du bei iXS?",o:["Ja","Nein"],h:"Dient nur dazu, diese Antworten getrennt auszuwerten."}
+];
+
+/* ---------- Kompakter Code (für das Formular) ----------
+   IXS1|Baum|Vorabfragen|Gerät|Aufgaben|Bemerkung
+   Aufgabe: Nr:Pfad:Rücksprünge:Sekunden:Klickpfad  (Pfad als Indexpfad, x = übersprungen; Klickpfad durch , getrennt, ~ = zugeklappt) */
+function pathToIx(tree,path){let nodes=TREES[tree],n=null;for(const seg of path.split("|")){n=nodes.find(x=>x.label===seg);if(!n)return null;nodes=n.kids||[];}return n.ix;}
+function ixToPath(tree,ix){let nodes=TREES[tree],n=null;for(const i of ix.split(".")){n=nodes[+i];if(!n)return null;nodes=n.kids||[];}return n.path;}
+function encodeSession(s){
+  const pre=PRE.map(p=>{const i=p.o.indexOf(s.pre[p.k]);return i<0?"x":i;}).join("");
+  const tasks=s.tasks.map(t=>{
+    const trail=(t.trail||[]).slice(0,12).map(x=>x.startsWith("↩ ")?"~"+pathToIx(s.tree,x.slice(2)):pathToIx(s.tree,x)).join(",");
+    return [t.task,t.path?pathToIx(s.tree,t.path):"x",t.back,Math.round(t.ms/1000),trail].join(":");
+  }).join(";");
+  const c=(s.comment||"").replace(/[|\n\r]+/g," ").slice(0,200);
+  return ["IXS1",s.tree,pre,s.device==="mobil"?"m":"d",tasks,c].join("|");
+}
+function decodeCode(code){
+  code=String(code).trim();
+  const parts=code.split("|");
+  if(parts[0]!=="IXS1"||!TREES[parts[1]])return null;
+  const tree=parts[1],preS=parts[2]||"",dev=parts[3],taskS=parts[4]||"",comment=parts.slice(5).join("|");
+  const pre={};PRE.forEach((p,i)=>{const v=preS[i];pre[p.k]=v&&v!=="x"?p.o[+v]:null;});
+  const tasks=taskS?taskS.split(";").map((seg,i)=>{
+    const [id,pix,back,sec,trailS]=seg.split(":");
+    const taskId=+id,path=pix==="x"?null:ixToPath(tree,pix);
+    const trail=(trailS?trailS.split(","):[]).filter(Boolean).map(x=>x.startsWith("~")?"↩ "+ixToPath(tree,x.slice(1)):ixToPath(tree,x));
+    const firstRaw=trail.find(Boolean);
+    const first=firstRaw?firstRaw.replace(/^↩ /,"").split("|")[0]:null;
+    const res=score(tree,taskId,path,!path);
+    return{task:taskId,pos:i+1,path,result:res,first,back:+back||0,direct:res==="erfolg"&&(+back||0)===0,ms:(+sec||0)*1000,trail};
+  }):[];
+  return{v:2,tree,pre,device:dev==="m"?"mobil":"desktop",tasks,comment,complete:tasks.length>=TASKS.length};
+}
+function codeId(code){let h=2166136261;for(let i=0;i<code.length;i++){h^=code.charCodeAt(i);h=Math.imul(h,16777619);}return"g-"+(h>>>0).toString(36);}
+
+
+const FORM_URL="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=kHjKN2XlQEqSUam04aCuapXAXd-d9NpBol7BDiH0vrxUMlFNWjQzT1ZTTDNMVDBLWDQ5SEFYWEUwNi4u&rdc208da383d24646a8a4fe3d7cd84d92=";
+
+const state={screen:"start",pre:{},session:null,order:[],i:0,cur:null,open:new Set(),sel:null};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+
+function renderStart(){
+  $("#view").innerHTML=`
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <h1>Wo würdest du suchen?</h1>
+    <p class="lead">Wir bauen die Website von iXS neu und testen, wie das Menü aufgebaut sein soll. Du bekommst 8 kurze Aufgaben und zeigst jeweils, wo im Menü du suchen würdest. Getestet wird die Struktur, nicht du. Falsche Antworten gibt es nicht.</p>
+    <div class="panel">
+      <h2>So geht's</h2>
+      <div class="howto">
+        <b>1</b><span>Lies die Aufgabe oben.</span>
+        <b>2</b><span>Tippe auf einen Menüpunkt, um ihn aufzuklappen. Im Menü kannst du jederzeit einen anderen Weg nehmen. Zu einer bereits abgeschlossenen Aufgabe kannst du nicht mehr zurück.</span>
+        <b>3</b><span>Wähle den Punkt, unter dem du suchen würdest, und tippe auf «Hier würde ich es finden». Das kann auch ein Punkt mit Pfeil sein.</span>
+        <b>4</b><span>Wenn du nicht weiterweisst: «Weiss nicht, überspringen».</span>
+        <b>5</b><span>Am Schluss tippst du auf «Antworten senden» und im Formular auf «Absenden».</span>
+      </div>
+      <p class="muted small">Dauer etwa 6 bis 8 Minuten. Die Antworten sind anonym, ohne Namen oder E-Mail-Adresse. Das Menü ist bewusst ohne Bilder und ohne Suche.</p>
+    </div>
+    <form class="panel" id="preForm">
+      <h2>Drei Fragen vorab</h2>
+      ${PRE.map(p=>`<fieldset><legend>${esc(p.q)}</legend>${p.h?`<span class="muted small">${esc(p.h)}</span>`:""}<div class="choices">${p.o.map((o,i)=>`<label><input type="radio" name="${p.k}" id="${p.k}-${i}" value="${esc(o)}" ${state.pre[p.k]===o?"checked":""}> ${esc(o)}</label>`).join("")}</div></fieldset>`).join("")}
+      <div class="row"><button class="btn primary" type="submit" id="startBtn" disabled>Test starten</button><span class="muted small" id="preHint">Bitte alle drei Fragen beantworten.</span></div>
+    </form>
+  </div>`;
+  const f=$("#preForm");
+  const check=()=>{PRE.forEach(p=>{const c=f.querySelector(`input[name="${p.k}"]:checked`);if(c)state.pre[p.k]=c.value;});const ok=PRE.every(p=>state.pre[p.k]);$("#startBtn").disabled=!ok;$("#preHint").hidden=ok;};
+  f.addEventListener("change",check);check();
+  f.addEventListener("submit",e=>{e.preventDefault();startTest();});
+}
+function startTest(){
+  const h=(location.hash||"").replace("#","").toUpperCase();
+  const tree=TREES[h]?h:["A","B","C"][Math.floor(Math.random()*3)];
+  state.session={tree,pre:{...state.pre},device:innerWidth<700?"mobil":"desktop",tasks:[],comment:""};
+  state.order=shuffle(TASKS.map(t=>t.id));state.i=0;
+  nextTask();
+}
+function nextTask(){
+  if(state.i>=state.order.length){state.screen="done";$("#actions").hidden=true;render();scrollTo({top:0});return;}
+  state.cur={id:state.order[state.i],t0:performance.now(),last:null,back:0,trail:[]};
+  state.open=new Set();state.sel=null;state.screen="task";
+  render();scrollTo({top:0});
+}
+const parentOf=p=>p.includes("|")?p.slice(0,p.lastIndexOf("|")):"";
+function log(path,kind){
+  const c=state.cur;
+  if(kind==="close"){c.back++;c.trail.push("↩ "+path);c.last=parentOf(path)||null;return;}
+  if(c.last&&!path.startsWith(c.last+"|"))c.back++;
+  c.trail.push(path);c.last=path;
+}
+function findNode(path){let nodes=TREES[state.session.tree],n=null;for(const seg of path.split("|")){n=nodes.find(x=>x.label===seg);if(!n)return null;nodes=n.kids||[];}return n;}
+function onNode(path){
+  const n=findNode(path);if(!n)return;
+  if(n.kids){
+    if(state.open.has(path)){
+      [...state.open].forEach(p=>{if(p===path||p.startsWith(path+"|"))state.open.delete(p);});
+      if(state.sel&&(state.sel===path||state.sel.startsWith(path+"|")))state.sel=null;
+      log(path,"close");
+    }else{
+      const keep=new Set();let p=path;while(p){keep.add(p);p=parentOf(p);}
+      state.open=keep;state.sel=path;log(path,"open");
+    }
+  }else{state.sel=path;log(path,"select");}
+  renderTreeOnly();
+}
+function treeHTML(nodes){
+  let html="",lastG=null;
+  nodes.forEach(n=>{
+    if(n.group&&n.group!==lastG){html+=`<li class="grp" aria-hidden="true">${esc(n.group)}</li>`;lastG=n.group;}
+    const open=state.open.has(n.path),sel=state.sel===n.path;
+    html+=`<li><button type="button" class="node ${n.kids?"":"leaf"} ${sel?"sel":""}" data-p="${esc(n.path)}" ${n.kids?`aria-expanded="${open}"`:`aria-pressed="${sel}"`}><span class="chev">›</span><span>${esc(n.label)}</span></button>${n.kids&&open?`<ul>${treeHTML(n.kids)}</ul>`:""}</li>`;
+  });
+  return html;
+}
+function renderTreeOnly(){
+  $("#tree").innerHTML=treeHTML(TREES[state.session.tree]);
+  $("#actions .pick").innerHTML=state.sel?`Gewählt: <strong>${esc(state.sel.split("|").pop())}</strong>`:"Tippe auf den Punkt, unter dem du suchen würdest.";
+  $("#confirm").disabled=!state.sel;
+}
+function renderTask(){
+  const t=TASKS.find(x=>x.id===state.cur.id),n=state.order.length;
+  $("#view").innerHTML=`
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <div class="progress"><span class="eyebrow">Aufgabe ${state.i+1} von ${n}</span><div class="bar"><span style="width:${(state.i/n)*100}%"></span></div></div>
+    <div class="task"><p>${esc(t.text)}</p></div>
+    <ul class="tree" id="tree" aria-label="Menü"></ul>
+  </div>`;
+  const a=$("#actions");a.hidden=false;
+  a.innerHTML=`<div class="in"><span class="pick"></span><div class="btns"><button class="btn ghost" type="button" id="skip">Weiss nicht, überspringen</button><button class="btn primary" type="button" id="confirm" disabled>Hier würde ich es finden</button></div></div>`;
+  $("#tree").addEventListener("click",e=>{const b=e.target.closest(".node");if(b)onNode(b.dataset.p);});
+  $("#skip").onclick=()=>answer(true);
+  $("#confirm").onclick=()=>answer(false);
+  renderTreeOnly();
+}
+function answer(skipped){
+  const c=state.cur;
+  state.session.tasks.push({task:c.id,path:skipped?null:state.sel,back:c.back,ms:Math.round(performance.now()-c.t0),trail:c.trail});
+  state.i++;nextTask();
+}
+function renderDone(){
+  $("#view").innerHTML=`
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <div class="panel">
+      <h1>Fast fertig</h1>
+      <p class="lead">Tippe auf «Antworten senden». Es öffnet sich ein Formular, in dem deine Antworten schon eingetragen sind. Dort tippst du nur noch auf «Absenden».</p>
+      <label for="comment"><strong>Bemerkung (optional)</strong><br><span class="muted small">Was war unklar oder schwierig? Bitte keine Namen.</span></label>
+      <textarea id="comment" maxlength="200"></textarea>
+      <div class="row"><a class="btn primary big" id="send" target="_blank" rel="noopener">Antworten senden</a></div>
+      <p class="muted small" id="sent" hidden>Danke! Wenn du im Formular auf «Absenden» getippt hast, kannst du diese Seite schliessen.</p>
+      <details><summary>Das Formular öffnet sich nicht?</summary>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+          <p class="small">Kopiere diesen Code und schicke ihn per Teams an Yan.</p>
+          <textarea class="code" id="code" readonly></textarea>
+          <div class="row"><button class="btn" type="button" id="copy">Code kopieren</button><span class="muted small" id="copied"></span></div>
+        </div>
+      </details>
+    </div>
+  </div>`;
+  const upd=()=>{state.session.comment=$("#comment").value.trim();const code=encodeSession(state.session);$("#send").href=FORM_URL+encodeURIComponent(code);$("#code").value=code;};
+  $("#comment").addEventListener("input",upd);upd();
+  $("#send").addEventListener("click",()=>{upd();$("#sent").hidden=false;});
+  $("#copy").onclick=()=>{const ta=$("#code"),out=$("#copied");
+    try{navigator.clipboard.writeText(ta.value).then(()=>out.textContent="Kopiert.",()=>{ta.select();out.textContent="Markiert. Jetzt mit Ctrl+C kopieren.";});}
+    catch(e){ta.select();out.textContent="Markiert. Jetzt mit Ctrl+C kopieren.";}};
+}
+function render(){
+  if(state.screen==="start"){$("#actions").hidden=true;renderStart();}
+  else if(state.screen==="task")renderTask();
+  else renderDone();
+}
+render();
+</script>
+</body>
+</html>
