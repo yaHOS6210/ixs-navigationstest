@@ -88,23 +88,24 @@ details summary{cursor:pointer;color:var(--muted);font-size:.875rem}
 const T=(label,kids)=>({label,kids:kids||null});
 const leaves=a=>a.map(l=>T(l));
 const grp=(g,nodes)=>nodes.map(n=>(n.group=g,n));
-const motoBekl=()=>T("Bekleidung",leaves(["Jacken","Hosen","Kombis","Regenbekleidung","Base- & Midlayer","Handschuhe","Stiefel & Schuhe","Airbag","Motocross"]));
+const motoBekl=()=>T("Bekleidung",leaves(["Jacken","Hosen","Kombis","Regenbekleidung","Base- & Midlayer","Handschuhe","Stiefel & Schuhe","Airbag"]));
 const motoHelme=()=>T("Helme",leaves(["Integralhelme","Klapphelme","Jethelme"]));
 const mtbBekl=()=>T("Bekleidung",leaves(["Trikots","Hosen","Regenbekleidung","Handschuhe"]));
-const mtbHelme=()=>T("Helme & Brillen",leaves(["Fullface-Helme","Openface-Helme","Brillen"]));
+const mtbHelme=()=>T("Helme",leaves(["Fullface-Helme","Openface-Helme"]));
 const mtbProt=()=>T("Protektoren",leaves(["Knieschoner","Ellbogenschoner","Oberkörperprotektoren"]));
 const motoLife=["Caps","Hoodies & Sweater","Shirts"];
 const mtbLife=["Caps & Mützen","Hoodies & Sweater","Shirts & Hemden","Socken"];
-const motoKat=()=>[motoBekl(),motoHelme(),T("Protektoren"),T("Zubehör & Ersatzteile",leaves(["Masken & Tücher","Nierengurte","Ersatzteile Helme","Ersatzteile Bekleidung","Ersatzteile Ausrüstung"])),T("Lifestyle",leaves(motoLife))];
-const mtbKat=()=>[mtbBekl(),mtbHelme(),mtbProt(),T("Zubehör & Ersatzteile",leaves(["Ersatzteile Brillen","Ersatzteile Helme","Ersatzteile Protektoren"])),T("Lifestyle",leaves(mtbLife))];
-const common=()=>[T("Sale",leaves(["Moto Sale","MTB Sale"])),T("Service",leaves(["Versand","Zahlungsarten","Retouren","Sendungsverfolgung","FAQ","Kontakt"])),T("Über iXS",leaves(["Über uns","Athleten","Blog","Händler finden"]))];
-const MOTO_W=["Venture","Tourster","Rapid","Race"], MTB_W=["Flow","Carve","Trigger","Park"];
+const motoKat=()=>[motoBekl(),motoHelme(),T("Protektoren"),T("Motocross"),T("Zubehör & Ersatzteile",leaves(["Masken & Tücher","Nierengurte","Ersatzteile Helme","Ersatzteile Bekleidung","Ersatzteile Ausrüstung"])),T("Lifestyle",leaves(motoLife))];
+const mtbKat=()=>[mtbBekl(),mtbHelme(),mtbProt(),T("Zubehör & Ersatzteile",leaves(["Ersatzteile Helme","Ersatzteile Protektoren"])),T("Lifestyle",leaves(mtbLife))];
+const common=()=>[T("Service",leaves(["Versand","Zahlungsarten","Retouren","Sendungsverfolgung","FAQ","Kontakt"])),T("Über iXS",leaves(["Über uns","Athleten","Blog","Händler finden"]))];
+const MOTO_W=["Venture","Tourster","Ace","Rapid"], MTB_W=["Trigger","Carve","Flow"];
 const TREES={
   A:[T("Moto",motoKat()),T("MTB",mtbKat()),...common()],
   B:[T("Moto-Welten",MOTO_W.map(w=>T(w,[motoBekl(),motoHelme(),T("Protektoren"),T("Zubehör",leaves(["Masken & Tücher","Nierengurte"]))]))),
      T("MTB-Welten",MTB_W.map(w=>T(w,[mtbBekl(),mtbHelme(),mtbProt(),T("Zubehör")]))),
+     T("Motocross"),
      T("Lifestyle",[T("Moto",leaves(motoLife)),T("MTB",leaves(mtbLife))]),
-     T("Ersatzteile",[T("Moto",leaves(["Ersatzteile Helme","Ersatzteile Bekleidung","Ersatzteile Ausrüstung"])),T("MTB",leaves(["Ersatzteile Brillen","Ersatzteile Helme","Ersatzteile Protektoren"]))]),
+     T("Ersatzteile",[T("Moto",leaves(["Ersatzteile Helme","Ersatzteile Bekleidung","Ersatzteile Ausrüstung"])),T("MTB",leaves(["Ersatzteile Helme","Ersatzteile Protektoren"]))]),
      ...common()],
   C:[T("Moto",[...grp("Nach Kategorie",motoKat()),...grp("Nach Riding World",leaves(MOTO_W))]),
      T("MTB",[...grp("Nach Kategorie",mtbKat()),...grp("Nach Riding World",leaves(MTB_W))]),
@@ -115,15 +116,15 @@ const TREE_NAMES={A:"A · Bereich zuerst",B:"B · Fahrstil zuerst",C:"C · Misch
 
 /* ---------- Aufgaben und Bewertung ---------- */
 const TASKS=[
- {id:1,typ:"mit Fahrstil",text:"Du planst eine Alpentour mit dem Motorrad und brauchst etwas für deine Hände, das bei Regen trocken bleibt.",
+ {id:1,typ:"mit Fahrstil",text:"Du planst eine Alpentour mit dem Motorrad und brauchst etwas für deine Hände, das auch auf kalten Passstrassen warm hält.",
   A:{s:["Moto|Bekleidung|Handschuhe"]},C:{s:["Moto|Bekleidung|Handschuhe"],p:["Moto|Tourster","Moto|Venture"]},
   B:{s:["Moto-Welten|Tourster|Bekleidung|Handschuhe","Moto-Welten|Venture|Bekleidung|Handschuhe"],p:["Moto-Welten|*|Bekleidung|Handschuhe"]},world:["Tourster","Venture"]},
  {id:2,typ:"mit Fahrstil",text:"Du fährst seit kurzem Enduro-Trails mit dem Mountainbike und suchst Schutz für die Knie.",
-  A:{s:["MTB|Protektoren|Knieschoner"]},C:{s:["MTB|Protektoren|Knieschoner"],p:["MTB|Carve"]},
-  B:{s:["MTB-Welten|Carve|Protektoren|Knieschoner"],p:["MTB-Welten|*|Protektoren|Knieschoner"]},world:["Carve"]},
+  A:{s:["MTB|Protektoren|Knieschoner"]},C:{s:["MTB|Protektoren|Knieschoner"],p:["MTB|Carve","MTB|Trigger"]},
+  B:{s:["MTB-Welten|Carve|Protektoren|Knieschoner"],p:["MTB-Welten|*|Protektoren|Knieschoner"]},world:["Carve","Trigger"]},
  {id:3,typ:"mit Fahrstil",text:"Du fährst Trackdays auf der Rennstrecke und suchst einen einteiligen Lederanzug.",
-  A:{s:["Moto|Bekleidung|Kombis"]},C:{s:["Moto|Bekleidung|Kombis"],p:["Moto|Race"]},
-  B:{s:["Moto-Welten|Race|Bekleidung|Kombis"],p:["Moto-Welten|Rapid|Bekleidung|Kombis"]},world:["Race"]},
+  A:{s:["Moto|Bekleidung|Kombis"]},C:{s:["Moto|Bekleidung|Kombis"],p:["Moto|Ace"]},
+  B:{s:["Moto-Welten|Ace|Bekleidung|Kombis"],p:["Moto-Welten|Rapid|Bekleidung|Kombis"]},world:["Ace"]},
  {id:4,typ:"ohne Fahrstil",text:"Das Visier deines Motorradhelms ist zerkratzt und du brauchst ein neues.",
   A:{s:["Moto|Zubehör & Ersatzteile|Ersatzteile Helme"]},C:{s:["Moto|Zubehör & Ersatzteile|Ersatzteile Helme"]},
   B:{s:["Ersatzteile|Moto|Ersatzteile Helme"],p:["Moto-Welten|*|Zubehör"]}},
@@ -154,7 +155,7 @@ const PRE=[
 ];
 
 /* ---------- Kompakter Code (für das Formular) ----------
-   IXS1|Baum|Vorabfragen|Gerät|Aufgaben|Bemerkung
+   IXS2|Baum|Vorabfragen|Gerät|Aufgaben|Bemerkung
    Aufgabe: Nr:Pfad:Rücksprünge:Sekunden:Klickpfad  (Pfad als Indexpfad, x = übersprungen; Klickpfad durch , getrennt, ~ = zugeklappt) */
 function pathToIx(tree,path){let nodes=TREES[tree],n=null;for(const seg of path.split("|")){n=nodes.find(x=>x.label===seg);if(!n)return null;nodes=n.kids||[];}return n.ix;}
 function ixToPath(tree,ix){let nodes=TREES[tree],n=null;for(const i of ix.split(".")){n=nodes[+i];if(!n)return null;nodes=n.kids||[];}return n.path;}
@@ -165,12 +166,12 @@ function encodeSession(s){
     return [t.task,t.path?pathToIx(s.tree,t.path):"x",t.back,Math.round(t.ms/1000),trail].join(":");
   }).join(";");
   const c=(s.comment||"").replace(/[|\n\r]+/g," ").slice(0,200);
-  return ["IXS1",s.tree,pre,s.device==="mobil"?"m":"d",tasks,c].join("|");
+  return ["IXS2",s.tree,pre,s.device==="mobil"?"m":"d",tasks,c].join("|");
 }
 function decodeCode(code){
   code=String(code).trim();
   const parts=code.split("|");
-  if(parts[0]!=="IXS1"||!TREES[parts[1]])return null;
+  if(parts[0]!=="IXS2"||!TREES[parts[1]])return null;
   const tree=parts[1],preS=parts[2]||"",dev=parts[3],taskS=parts[4]||"",comment=parts.slice(5).join("|");
   const pre={};PRE.forEach((p,i)=>{const v=preS[i];pre[p.k]=v&&v!=="x"?p.o[+v]:null;});
   const tasks=taskS?taskS.split(";").map((seg,i)=>{
