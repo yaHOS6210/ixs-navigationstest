@@ -101,9 +101,8 @@ const common=()=>[T("Service",leaves(["Versand","Zahlungsarten","Retouren","Send
 const MOTO_W=["Venture","Tourster","Ace","Rapid"], MTB_W=["Trigger","Carve","Flow"];
 const TREES={
   A:[T("Moto",motoKat()),T("MTB",mtbKat()),...common()],
-  B:[T("Moto-Welten",MOTO_W.map(w=>T(w,[motoBekl(),motoHelme(),T("Protektoren"),T("Zubehör",leaves(["Masken & Tücher","Nierengurte"]))]))),
+  B:[T("Moto-Welten",[...MOTO_W,"Motocross"].map(w=>T(w,[motoBekl(),motoHelme(),T("Protektoren"),T("Zubehör",leaves(["Masken & Tücher","Nierengurte"]))]))),
      T("MTB-Welten",MTB_W.map(w=>T(w,[mtbBekl(),mtbHelme(),mtbProt(),T("Zubehör")]))),
-     T("Motocross"),
      T("Lifestyle",[T("Moto",leaves(motoLife)),T("MTB",leaves(mtbLife))]),
      T("Ersatzteile",[T("Moto",leaves(["Ersatzteile Helme","Ersatzteile Bekleidung","Ersatzteile Ausrüstung"])),T("MTB",leaves(["Ersatzteile Helme","Ersatzteile Protektoren"]))]),
      ...common()],
